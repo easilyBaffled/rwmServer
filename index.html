@@ -31,13 +31,7 @@
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
-      socket.on('newPos', function (pos) {
-        console.log(pos);
-        $('#pos').append($('<li>').text(pos));
-      })
-      socket.on('loaded', function (message) {
-        console.log(message);
-      })
+      
     </script>
   </body>
 </html>
