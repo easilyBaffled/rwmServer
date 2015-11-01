@@ -12,7 +12,7 @@ io.on('connection', function(socket){
   });
   socket.on('newPos', function (pos) {
     console.log(pos);
-    //$('#pos').append($('<li>').text(pos));
+    io.emit('newPos')
   })
   socket.on('loaded', function (message) {
     console.log(message);
