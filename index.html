@@ -13,7 +13,7 @@
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
-  <body> 
+  <body>
     <ul id="messages"></ul>
     <ul id="pos"></ul>
     <form action="">
@@ -32,7 +32,11 @@
         $('#messages').append($('<li>').text(msg));
       });
       socket.on('newPos', function (pos) {
+        console.log(pos);
         $('#pos').append($('<li>').text(pos));
+      })
+      socket.on('test', function (data) {
+        console.log(data);        
       })
     </script>
   </body>

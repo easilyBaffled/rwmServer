@@ -17,6 +17,10 @@ io.on('connection', function(socket){
   socket.on('loaded', function (message) {
     console.log(message);
   })
+  socket.on('test', function (message) {
+    console.log(message);
+    io.emit('test', message);
+  })
 });
 
 http.listen(process.env.PORT || 3000, function(){
