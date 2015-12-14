@@ -12,7 +12,7 @@ io.on('connection', function(socket){
   });
   socket.on('newPos', function (pos) {
     console.log(pos);
-    io.emit('newPos')
+    io.emit('newPos', pos);
   })
   socket.on('loaded', function (message) {
     console.log(message);
