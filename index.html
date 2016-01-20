@@ -31,12 +31,12 @@
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
-      socket.on('newPos', function (pos) {
-        console.log(pos);
-        $('#pos').append($('<li>').text(pos));
+      socket.on('newPos', function (posData) {
+        console.log(posData);        
+        $('#pos').append($('<li>').text(posData));
       })
       socket.on('test', function (data) {
-        console.log(data);        
+        console.log(data);
       })
     </script>
   </body>
