@@ -9,7 +9,7 @@
     "babel": "^5.8.29",
     "express": "4.10.2",
     "socket.io": "1.2.0",
-    "nodemailer": "2.0.0",
+    "nodemailer": "2.0.0"
   },
   "devDependencies": {
     "babelify": "^6.4.0"
