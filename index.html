@@ -4,16 +4,20 @@
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      html, body { font: 13px Helvetica, Arial; height: 100%; margin: 0; padding: 0;}
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      #map {
+        height: 80%;
+      }
     </style>
   </head>
   <body>
+    <div id="map"></div>
     <ul id="messages"></ul>
     <ul id="pos"></ul>
     <form action="">
@@ -21,7 +25,24 @@
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAM9bhYwfXJCmkSxsFBDuU_bKOgRgmf0ec&callback=initMap"
+    async defer></script>
     <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(parseFloat(37.366103), parseFloat(-122.018505)),
+          zoom: 15
+        });
+        poly = new google.maps.Polyline({
+          strokeColor: '#000000',
+          strokeOpacity: 1.0,
+          strokeWeight: 3
+        });
+        poly.setMap(map);
+      }
+
+
       var socket = io();
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
@@ -32,7 +53,24 @@
         $('#messages').append($('<li>').text(msg));
       });
       socket.on('newPos', function (posData) {
-        console.log(posData);        
+         console.log(posData);
+         var path = poly.getPath();
+          // Because path is an MVCArray, we can simply append a new coordinate
+          // and it will automatically appear.
+          if (posData.latitude || posData.longitude) {
+            var myLatlng = new google.maps.LatLng(posData.latitude,posData.longitude);
+            path.push(myLatlng);
+          } else {
+            var myLatlng = new google.maps.LatLng(parseFloat(37.366103), parseFloat(-122.018505));
+            path.push(myLatlng);
+          }
+
+          // Add a new marker at the new plotted point on the polyline.
+          var marker = new google.maps.Marker({
+            position: {lat: posData.latitude, lng: posData.longitude},
+            title: '#' + path.getLength(),
+            map: map
+          });
         $('#pos').append($('<li>').text(posData));
       })
       socket.on('test', function (data) {
