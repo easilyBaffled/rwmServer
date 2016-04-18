@@ -1,8 +1,10 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var phantomjs = require('phantomjs');
 var Horseman = require('node-horseman');
-var horseman = new Horseman();
+// var horseman = new Horseman();
+var horseman = new Horseman({phantomPath: phantomjs.path});
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -11,7 +13,8 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   socket.on('scrape', function(selectionData){
     console.log('scraping');
-    horseman.open(selectionData.url).text(selectionData.selector)
+    horseman.open(selectionData.url)
+            .text(selectionData.selector)
             .then(function (text) {
               io.emit('selection', { path: selectionData.selector, text: text, url: selectionData.url});
             })

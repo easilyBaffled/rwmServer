@@ -11,6 +11,7 @@
     "google-maps": "^3.1.0",
     "node-horseman": "^3.0.1",
     "nodemailer": "2.0.0",
+    "phantomjs": "^2.1.7",
     "socket.io": "1.2.0"
   },
   "devDependencies": {
