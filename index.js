@@ -22,7 +22,7 @@ io.on('connection', function(socket){
             .close();
   });
   socket.on('selection', function (selectionData) {
-    console.log('recived data');
+    console.log('received data');
     io.emit('selection', selectionData);
   });
 
