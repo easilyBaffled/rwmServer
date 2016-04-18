@@ -34,7 +34,7 @@
         $('#selection').append($('<li>').text(selectionData.path));
         $('#selection').append($('<li>').text(selectionData.text));
         $('#selection').append($('<li>').text(selectionData.url));
-        $('#selection').append($('<button>').text('Scrape').click(scrape);
+        $('#selection').append($('<button>').text('Scrape').click(scrape));
       }
 
       socket.on('selection', addScrapedData);
