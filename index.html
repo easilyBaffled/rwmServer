@@ -14,17 +14,43 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      var Horseman = require('node-horseman');
+      var horseman = new Horseman();
+
       var socket = io();
-      socket.on('selection', function (selectionData) {
-         $('#selection').empty();
-         $('#selection').append($('<li>').text(selectionData.path));
-         $('#selection').append($('<li>').text(selectionData.text));
-         $('#selection').append($('<li>').text(selectionData.url));
-         $('#selection').append($('<button>').text('Scrape').click(function () {
-           console.log('scrape');
-           socket.emit('scrape', {url: selectionData.url, selector: selectionData.path});
-         }));
-      })
+      function scrape(url, selector) {
+         horseman.open(selectionData.url)
+                 .text(selectionData.selector)
+                 .then(function (text) {
+                   addScrapedData({ path: selectionData.selector, text: text, url: selectionData.url});
+                 })
+                 .close()
+      }
+
+      function addScrapedData(selectionData) {
+        $('#selection').empty();
+        $('#selection').append($('<li>').text(selectionData.path));
+        $('#selection').append($('<li>').text(selectionData.text));
+        $('#selection').append($('<li>').text(selectionData.url));
+        $('#selection').append($('<button>').text('Scrape').click(scrape);
+      }
+
+      socket.on('selection', addScrapedData);
+      // function (selectionData) {
+      //    $('#selection').empty();
+      //    $('#selection').append($('<li>').text(selectionData.path));
+      //    $('#selection').append($('<li>').text(selectionData.text));
+      //    $('#selection').append($('<li>').text(selectionData.url));
+      //    $('#selection').append($('<button>').text('Scrape').click(function () {
+      //      horseman.open(selectionData.url).text(selectionData.selector)
+      //              .then(function (text) {
+      //                io.emit('selection', { path: selectionData.selector, text: text, url: selectionData.url});
+      //              })
+      //              .close();
+      //      console.log('scrape');
+      //      socket.emit('scrape', {url: selectionData.url, selector: selectionData.path});
+      //    }));
+      // })
     </script>
   </body>
 </html>
