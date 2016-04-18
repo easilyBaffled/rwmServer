@@ -19,6 +19,7 @@
 
       var socket = io();
       function scrape(url, selector) {
+         console.log('scrape');
          horseman.open(selectionData.url)
                  .text(selectionData.selector)
                  .then(function (text) {
@@ -28,6 +29,7 @@
       }
 
       function addScrapedData(selectionData) {
+        console.log('adding');
         $('#selection').empty();
         $('#selection').append($('<li>').text(selectionData.path));
         $('#selection').append($('<li>').text(selectionData.text));
